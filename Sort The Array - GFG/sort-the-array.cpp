@@ -9,9 +9,9 @@ class Solution{
     {
         int pivot=arr[s];
         int cnt=0;
-        for(int i=s+1;i<=e;i++)
+        for(int i=s;i<=e;i++)
         {
-            if(arr[i]<=pivot)
+            if(arr[i]<pivot)
             cnt++;
         }
         int pi=s+cnt;
@@ -19,11 +19,11 @@ class Solution{
         int i=s;int j=e;
         while(i<pi&&j>pi)
         {
-            while(i<pi&&arr[i]<=pivot)
+            while(i<pi&&arr[i]<pivot)
             {
                 i++;
             }
-            while(j>pi&&arr[j]>pivot)
+            while(j>pi&&arr[j]>=pivot)
             {
                 j--;
             }
