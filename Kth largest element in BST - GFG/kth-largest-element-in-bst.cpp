@@ -101,47 +101,49 @@ class Solution
     void helper(Node* root)
     {
         if(!root)
-        return;
+        return ;
         n++;
         helper(root->left);
         helper(root->right);
     }
-    int kthLargest(Node *root, int k)
+    int kthLargest(Node *root, int K)
     {
         //Your code here
-        if(!root)
-        return 0;
         n=0;
         helper(root);
-        k=n-k+1;
-        Node* curr=root;
-        int ans;
-        while(curr)
+        int k=n-K+1;
+        int ans=0;
+        while(root)
         {
-            if(!curr->left)
+            if(root->left==NULL)
             {
                 k--;
                 if(k==0)
-                ans=curr->data;
-                curr=curr->right;
+                {
+                    ans=root->data;
+                }
+                root=root->right;
             }
-            else{
-                Node* prev=curr->left;
-                while(prev->right&&prev->right!=curr)
-                {
-                    prev=prev->right;
-                }
-                if(!prev->right)
-                {
-                    prev->right=curr;
-                    curr=curr->left;
-                }
-                else{
-                    prev->right=NULL;k--;
-                    if(k==0)
-                    ans=curr->data;
-                    curr=curr->right;
-                }
+            else
+         {
+             //root=root->left;
+             Node* curr=root->left;
+             while(curr->right&&curr->right!=root)
+             {
+                 curr=curr->right;
+             }
+             if(!curr->right)
+             {
+                 curr->right=root;
+                 root=root->left;
+             }
+             else{
+                 curr->right=NULL;
+                 k--;
+                 if(k==0)
+                 ans=root->data;
+                 root=root->right;
+             }
             }
         }
         return ans;
