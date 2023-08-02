@@ -6,33 +6,33 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
+    unordered_set<int> vis;
+    bool helper(int par,int node,vector<int> adj[])
+    {
+      vis.insert(node);
+      for(auto u:adj[node])
+      {
+          if(vis.find(u)==vis.end())
+          {
+              if(helper(node,u,adj))
+              return true;
+          }
+          else
+          {
+              if(u!=par)
+              return true;
+          }
+      }
+      return false;
+    }
     bool isCycle(int n, vector<int> adj[]) {
-        // Code here queue<pair<int,int>> q;
-    vector<int> vis(n+1,false);
+       
     for(int i=0;i<n;i++)
     {
-        if(vis[i]==true)
-        continue;
-        queue<pair<int,int>> q;
-    q.push({i,-1});
-    vis[i]=1;
-    while(!q.empty())
-    {
-        auto node=q.front().first;
-        auto par=q.front().second;
-          q.pop();
-        for(auto v:adj[node])
-        {
-            if(!vis[v])
-            {
-                vis[v]=1;
-                q.push({v,node});
-            } else {
-                if (v != par)
-                  return true;
-            }
-        }
-    }
+      if(vis.find(i)!=vis.end())
+      continue;
+      if(helper(-1,i,adj))
+      return true;
     }
     return false;
     }
